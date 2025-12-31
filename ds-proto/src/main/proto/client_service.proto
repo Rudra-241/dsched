@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package ds.client;
+
+import "common.proto";
+
+option java_package = "io.github.rudra241.ds.proto.client";
+option java_multiple_files = true;
+
+service ClientService {
+  rpc SubmitJob(SubmitJobRequest) returns (SubmitJobResponse);
+  rpc GetJobStatus(GetJobStatusRequest) returns (GetJobStatusResponse);
+  rpc CancelJob(CancelJobRequest) returns (CancelJobResponse);
+}
+
+message SubmitJobRequest {
+  bytes request_id = 1;
+  string job_name = 2; // which function to trigger
+  bytes payload = 3;   // parameters for the function
+  ds.common.ScheduleSpec schedule = 4;
+  ds.common.RetryPolicy retry_policy = 5;
+}
+
+message SubmitJobResponse {
+  bytes job_id = 1;
+}
+
+message GetJobStatusRequest {
+  bytes job_id = 1;
+}
+
+message GetJobStatusResponse {
+  bytes job_id = 1;
+  ds.common.JobState state = 2;
+  optional ds.common.FailureInfo err = 3;
+}
+
+message CancelJobRequest {
+  bytes job_id = 1;
+}
+
+message CancelJobResponse {
+  bool canceled = 1;
+}

@@ -1,0 +1,12 @@
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            // This enables the version catalog named "libs"
+        }
+    }
+}
+rootProject.name = 'ds'
+include 'ds-proto'
+include 'ds-client'
+include 'ds-server'

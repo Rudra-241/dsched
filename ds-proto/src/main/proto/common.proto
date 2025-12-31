@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package ds.common;
+
+option java_package = "io.github.rudra241.ds.proto.common";
+option java_multiple_files = true;
+
+// client view
+enum JobState {
+  JOB_STATE_UNSPECIFIED = 0;
+  JOB_PENDING = 1;
+  JOB_RUNNING = 2;
+  JOB_SUCCEEDED = 3;
+  JOB_FAILED = 4;
+  JOB_CANCELED = 5;
+}
+// worker/scheduler view
+enum TaskState {
+  TASK_STATE_UNSPECIFIED = 0;
+  TASK_PENDING = 1;
+  TASK_RUNNING = 2;
+  TASK_SUCCEEDED = 3;
+  TASK_FAILED = 4;
+}
+
+message RetryPolicy {
+  int32 max_attempts = 1;
+  int64 backoff_ms = 2;
+}
+
+message ScheduleSpec {
+  oneof schedule {
+    int64 run_at_epoch_ms = 1;
+    int64 fixed_delay_ms = 2;
+  }
+}
+
+message FailureInfo {
+  string code = 1;
+  string message = 2;
+}
+

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package ds.worker;
+
+import "common.proto";
+
+option java_package = "io.github.rudra241.ds.proto.worker";
+option java_multiple_files = true;
+
+service WorkerService {
+  rpc RegisterWorker(RegisterWorkerRequest) returns (RegisterWorkerResponse);
+  rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+  rpc PollTask(PollTaskRequest) returns (PollTaskResponse);
+  rpc ReportResult(ReportResultRequest) returns (ReportResultResponse);
+}
+
+message RegisterWorkerRequest {
+  bytes worker_id = 1;
+  int32 capacity = 2;
+}
+
+message RegisterWorkerResponse {
+  bool accepted = 1;
+}
+
+message HeartbeatRequest {
+  bytes worker_id = 1;
+}
+
+message HeartbeatResponse {}
+
+message PollTaskRequest {
+  bytes worker_id = 1;
+}
+
+message PollTaskResponse {
+  TaskAssignment task = 1;
+}
+
+message TaskAssignment {
+  bytes task_id = 1;
+  bytes job_id = 2;
+  bytes payload = 3;
+  int32 attempt = 4;
+}
+
+message ReportResultRequest {
+  bytes task_id = 1;
+  ds.common.TaskState state = 2;
+  string message = 3;
+}
+
+message ReportResultResponse {}

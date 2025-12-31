@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+
+allprojects {
+    group = 'io.github.rudra241'
+    version = '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
